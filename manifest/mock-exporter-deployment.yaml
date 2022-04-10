@@ -27,7 +27,7 @@ spec:
         app.kubernetes.io/version: 0.19.0
     spec:
       containers:
-      - image: zenghaocq/mock-exporter:0.0.1
+      - image: zenghaocq/mock-exporter:0.0.2
         imagePullPolicy: IfNotPresent
         name: mock-exporter
         ports:
