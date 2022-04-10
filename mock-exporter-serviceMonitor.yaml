@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: exporter
+    app.kubernetes.io/name: mock-exporter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.19.0
+  name: mock-exporter
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 1s
+    path: /metrics
+    port: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: mock-exporter
+      app.kubernetes.io/part-of: kube-prometheus

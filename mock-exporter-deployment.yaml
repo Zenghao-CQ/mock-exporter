@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: exporter
+    app.kubernetes.io/name: mock-exporter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.19.0
+  name: mock-exporter
+  namespace: monitoring
+spec:
+  spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: exporter
+      app.kubernetes.io/name: mock-exporter
+      app.kubernetes.io/part-of: kube-prometheus
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: mock-exporter
+      labels:
+        app.kubernetes.io/component: exporter
+        app.kubernetes.io/name: mock-exporter
+        app.kubernetes.io/part-of: kube-prometheus
+        app.kubernetes.io/version: 0.19.0
+    spec:
+      containers:
+      - image: zenghaocq/mock-exporter:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: mock-exporter
+        ports:
+        - containerPort: 8000
+          name: http
+        args:
+        - --start=30
+        - --period=20
+        - --failureTypes=3
