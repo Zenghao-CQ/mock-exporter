@@ -27,7 +27,7 @@ spec:
         app.kubernetes.io/version: 0.19.0
     spec:
       containers:
-      - image: zenghaocq/failure-exporter:0.0.2
+      - image: zenghaocq/failure-exporter:0.0.3
         imagePullPolicy: IfNotPresent
         name: failure-exporter
         ports:

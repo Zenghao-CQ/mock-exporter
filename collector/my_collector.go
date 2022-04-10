@@ -43,12 +43,13 @@ func newGlobalMetric(namespace string, metricName string, docString string, labe
 func NewMetrics(namespace string, failureTypes int) *Metrics {
 	return &Metrics{
 		metrics: map[string]*prometheus.Desc{
-			"failure_metric": newGlobalMetric(namespace, "failure_counter_metric", "The description of failure an fuilure", []string{"type", "time"}),
+			"failure_metric": newGlobalMetric(namespace, "failure_counter_metric", "The description of failure an fuilure", []string{"type", "time", "timeFormat"}),
 			// "my_gauge_metric":   newGlobalMetric(namespace, "my_gauge_metric", "The description of my_gauge_metric", []string{"host"}),
 		},
 		mockLabels: map[string]string{
-			"type": "0",
-			"time": strconv.FormatInt(time.Now().Unix(), 10),
+			"type":       "0",
+			"time":       strconv.FormatInt(time.Now().UnixNano()/1e6, 10),
+			"timeFormat": time.Now().In(time.FixedZone("UTC+8", 8*60*60)).Format("2006-01-02 15:04:05"),
 		},
 		failureTypes: failureTypes,
 	}
@@ -72,7 +73,7 @@ func (c *Metrics) Collect(ch chan<- prometheus.Metric) {
 	c.mutex.Lock() // 加锁
 	defer c.mutex.Unlock()
 	v, _ := strconv.Atoi(c.mockLabels["type"])
-	ch <- prometheus.MustNewConstMetric(c.metrics["failure_metric"], prometheus.CounterValue, float64(v), c.mockLabels["type"], c.mockLabels["time"])
+	ch <- prometheus.MustNewConstMetric(c.metrics["failure_metric"], prometheus.CounterValue, float64(v), c.mockLabels["type"], c.mockLabels["time"], c.mockLabels["timeFormat"])
 }
 
 /**
@@ -82,8 +83,9 @@ func (c *Metrics) Collect(ch chan<- prometheus.Metric) {
 func (c *Metrics) GenerateMockData() {
 	c.mutex.Lock() // 加锁
 	defer c.mutex.Unlock()
-	ct := time.Now().Unix()
+	ct := time.Now()
 	c.mockLabels["type"] = strconv.Itoa(rand.Intn(c.failureTypes) + 1)
-	c.mockLabels["time"] = strconv.FormatInt(ct, 10)
-	log.Printf("Generate failure type:%s time:%s timesamp:%s", c.mockLabels["type"], c.mockLabels["time"], time.Unix(ct, 0).Format("2006-01-02 15:04:05"))
+	c.mockLabels["time"] = strconv.FormatInt(int64(ct.Nanosecond())/1e6, 10)
+	c.mockLabels["timeFormat"] = ct.In(time.FixedZone("UTC+8", 8*60*60)).Format("2006-01-02 15:04:05")
+	log.Printf("Generate failure type:%s time:%s timesamp:%s", c.mockLabels["type"], c.mockLabels["time"], c.mockLabels["timeFormat"])
 }
