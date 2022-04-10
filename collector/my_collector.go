@@ -71,12 +71,8 @@ func (c *Metrics) Describe(ch chan<- *prometheus.Desc) {
 func (c *Metrics) Collect(ch chan<- prometheus.Metric) {
 	c.mutex.Lock() // 加锁
 	defer c.mutex.Unlock()
-	v := 1
-	if c.mockLabels["type"] == "0" {
-		v = 0
-	}
+	v, _ := strconv.Atoi(c.mockLabels["type"])
 	ch <- prometheus.MustNewConstMetric(c.metrics["failure_metric"], prometheus.CounterValue, float64(v), c.mockLabels["type"], c.mockLabels["time"])
-
 }
 
 /**

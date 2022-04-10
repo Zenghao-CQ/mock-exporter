@@ -1,5 +1,5 @@
 USER=zenghaocq
-TAG=0.0.1
+TAG=0.0.2
 IMG=${USER}/mock-exporter:${TAG}
 
 all: build docker-build docker-push
