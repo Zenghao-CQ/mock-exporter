@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/component: exporter
-    app.kubernetes.io/name: mock-exporter
+    app.kubernetes.io/name: failure-exporter
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 0.19.0
-  name: mock-exporter
+  name: failure-exporter
   namespace: monitoring
 spec:
   spec:
@@ -14,22 +14,22 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: exporter
-      app.kubernetes.io/name: mock-exporter
+      app.kubernetes.io/name: failure-exporter
       app.kubernetes.io/part-of: kube-prometheus
   template:
     metadata:
       annotations:
-        kubectl.kubernetes.io/default-container: mock-exporter
+        kubectl.kubernetes.io/default-container: failure-exporter
       labels:
         app.kubernetes.io/component: exporter
-        app.kubernetes.io/name: mock-exporter
+        app.kubernetes.io/name: failure-exporter
         app.kubernetes.io/part-of: kube-prometheus
         app.kubernetes.io/version: 0.19.0
     spec:
       containers:
-      - image: zenghaocq/mock-exporter:0.0.2
+      - image: zenghaocq/failure-exporter:0.0.2
         imagePullPolicy: IfNotPresent
-        name: mock-exporter
+        name: failure-exporter
         ports:
         - containerPort: 8000
           name: http

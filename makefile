@@ -1,6 +1,6 @@
 USER=zenghaocq
 TAG=0.0.2
-IMG=${USER}/mock-exporter:${TAG}
+IMG=${USER}/mine-exporter:${TAG}
 
 all: build docker-build docker-push
 

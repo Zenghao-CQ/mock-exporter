@@ -3,10 +3,10 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/component: exporter
-    app.kubernetes.io/name: mock-exporter
+    app.kubernetes.io/name: failure-exporter
     app.kubernetes.io/part-of: kube-prometheus
     app.kubernetes.io/version: 0.19.0
-  name: mock-exporter
+  name: failure-exporter
   namespace: monitoring
 spec:
   ports:
@@ -15,5 +15,5 @@ spec:
     targetPort: http
   selector:
     app.kubernetes.io/component: exporter
-    app.kubernetes.io/name: mock-exporter
+    app.kubernetes.io/name: failure-exporter
     app.kubernetes.io/part-of: kube-prometheus
