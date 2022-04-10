@@ -1,6 +1,6 @@
 USER=zenghaocq
 TAG=0.0.2
-IMG=${USER}/mine-exporter:${TAG}
+IMG=${USER}/failure-exporter:${TAG}
 
 all: build docker-build docker-push
 
