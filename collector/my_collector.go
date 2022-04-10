@@ -87,7 +87,7 @@ func (c *Metrics) GenerateMockData() {
 	c.mutex.Lock() // 加锁
 	defer c.mutex.Unlock()
 	ct := time.Now().Unix()
-	c.mockLabels["type"] = strconv.Itoa(rand.Intn(c.failureTypes-1) + 1)
+	c.mockLabels["type"] = strconv.Itoa(rand.Intn(c.failureTypes) + 1)
 	c.mockLabels["time"] = strconv.FormatInt(ct, 10)
 	log.Printf("Generate failure type:%s time:%s timesamp:%s", c.mockLabels["type"], c.mockLabels["time"], time.Unix(ct, 0).Format("2006-01-02 15:04:05"))
 }
