@@ -1,5 +1,5 @@
 USER=zenghaocq
-TAG=0.0.4
+TAG=0.1
 IMG=${USER}/failure-exporter:${TAG}
 
 all: build docker-build docker-push
