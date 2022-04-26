@@ -90,7 +90,7 @@ func (c *Metrics) GenerateMockData() {
 	ct := time.Now()
 	c.mockLabels["type"] = strconv.Itoa(rand.Intn(c.failureTypes) + 1)
 	c.mockLabels["time"] = strconv.FormatInt(int64(ct.Nanosecond())/1e3, 10)
-	c.mockLabels["timeFormat"] = ct.In(time.FixedZone("UTC+8", 8*60*60)).Format("2006-01-02 15:04:05")
+	c.mockLabels["timeFormat"] = ct.In(time.FixedZone("UTC+8", 8*60*60)).Format("2006-01-02 15:04:05.000")
 	c.mockLabels["visited"] = "false"
 	c.mockLabels["podName"] = c.podNames[rand.Int()%len(c.podNames)]
 	log.Printf("Generate failure type:%s time:%s timesamp:%s visited:%s podName:%s", c.mockLabels["type"], c.mockLabels["time"], c.mockLabels["timeFormat"], c.mockLabels["visited"], c.mockLabels["podName"])
