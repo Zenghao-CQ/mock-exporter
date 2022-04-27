@@ -16,7 +16,7 @@ func RecordMetrics(m *Metrics, start int64, period int64) {
 		for {
 			m.GenerateMockData()
 			OpsProcessed.Inc()
-			time.Sleep((time.Duration(start + rand.Int63n(period))) * time.Second)
+			time.Sleep((time.Duration(start*1000 + rand.Int63n(period*1000))) * time.Microsecond)
 		}
 	}()
 }
